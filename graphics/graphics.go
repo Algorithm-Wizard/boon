@@ -8,20 +8,20 @@ import (
 )
 
 type Draw struct {
-	pos  math.Vector
-	size math.Vector
-	img  ebiten.Image
+	Pos  math.Vector
+	Size math.Vector
+	Img  ebiten.Image
 }
 
 func (d *Draw) MoveTo(pos math.Vector) {
-	d.pos = pos
+	d.Pos = pos
 }
 
 func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
-	bgn := d.pos
+	bgn := d.Pos
 	end := dst
-	dx := math.Abs(end.X - d.pos.X)
-	dy := math.Abs(end.Y - d.pos.Y)
+	dx := math.Abs(end.X - d.Pos.X)
+	dy := math.Abs(end.Y - d.Pos.Y)
 	if dx > dy {
 		if bgn.X > end.X {
 			bgn, end = end, bgn
@@ -29,7 +29,7 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 		ystp := dy / dx
 		yi := bgn.Y
 		for xi := bgn.X; xi < end.X; xi += 1.0 {
-			d.img.Set(int(xi), int(yi), clr)
+			d.Img.Set(int(xi), int(yi), clr)
 			yi += ystp
 		}
 	} else if dy > dx {
@@ -38,11 +38,11 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 		}
 		xstp := dx / dy
 		xi := bgn.X
-		for yi := bgn.Y; yi < end; yi += 1.0 {
-			d.img.Set(int(xi), int(yi), clr)
+		for yi := bgn.Y; yi < end.Y; yi += 1.0 {
+			d.Img.Set(int(xi), int(yi), clr)
 			xi += xstp
 		}
 	}
-	d.img.Set(int(d.pos.X), int(d.pos.Y), clr)
-	d.img.Set(int(end.X), int(end.Y), clr)
+	d.Img.Set(int(d.Pos.X), int(d.Pos.Y), clr)
+	d.Img.Set(int(end.X), int(end.Y), clr)
 }

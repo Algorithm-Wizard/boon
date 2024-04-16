@@ -4,6 +4,7 @@ import (
 	"image/color"
 	"log"
 
+	"github.com/Algorithm-Wizard/boon/graphics"
 	"github.com/Algorithm-Wizard/boon/math"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -43,6 +44,13 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Gray{16})
+	var drawer graphics.Draw
+	drawer.Img = *screen
+	var mid math.Vector
+	mid.X = float32(screen.Bounds().Size().X / 2)
+	mid.Y = float32(screen.Bounds().Size().Y / 2)
+	drawer.MoveTo(mid)
+	drawer.LineTo(g.ballp, color.White)
 	screen.Set(int(g.ballp.X), int(g.ballp.Y), color.White)
 }
 
