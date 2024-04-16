@@ -1,4 +1,4 @@
-module Algorithm-Wizard
+module boon
 
 go 1.22.2
 
