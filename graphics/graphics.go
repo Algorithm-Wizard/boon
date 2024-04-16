@@ -20,9 +20,9 @@ func (d *Draw) MoveTo(pos math.Vector) {
 func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 	bgn := d.Pos
 	end := dst
-	dx := math.Abs(end.X - d.Pos.X)
-	dy := math.Abs(end.Y - d.Pos.Y)
-	if dx > dy {
+	dx := end.X - d.Pos.X
+	dy := end.Y - d.Pos.Y
+	if math.Abs(dx) > math.Abs(dy) {
 		if bgn.X > end.X {
 			bgn, end = end, bgn
 		}
@@ -32,7 +32,7 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 			d.Img.Set(int(xi), int(yi), clr)
 			yi += ystp
 		}
-	} else if dy > dx {
+	} else if math.Abs(dy) > math.Abs(dx) {
 		if bgn.Y > end.Y {
 			bgn, end = end, bgn
 		}

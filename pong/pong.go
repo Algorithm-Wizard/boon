@@ -3,15 +3,21 @@ package main
 import (
 	"image/color"
 	"log"
+	std "math/rand"
+	"strconv"
+	"time"
 
 	"github.com/Algorithm-Wizard/boon/graphics"
 	"github.com/Algorithm-Wizard/boon/math"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
+const lines int = 200
+
 type Game struct {
-	ballp math.Vector
-	ballv math.Vector
+	ballp [lines]math.Vector
+	ballv [lines]math.Vector
 	size  math.Vector
 }
 
@@ -21,37 +27,38 @@ type Game struct {
 }*/
 
 func (g *Game) Update() error {
-	g.ballp.X += g.ballv.X
-	g.ballp.Y += g.ballv.Y
-	if g.ballp.X >= g.size.X {
-		g.ballp.X = (g.size.X * 2.0) - g.ballp.X
-		g.ballv.X = -g.ballv.X
-	}
-	if g.ballp.Y >= g.size.Y {
-		g.ballp.Y = (g.size.Y * 2.0) - g.ballp.Y
-		g.ballv.Y = -g.ballv.Y
-	}
-	if g.ballp.X < 0 {
-		g.ballp.X = -g.ballp.X
-		g.ballv.X = -g.ballv.X
-	}
-	if g.ballp.Y < 0 {
-		g.ballp.Y = -g.ballp.Y
-		g.ballv.Y = -g.ballv.Y
+	for i := 0; i < lines; i++ {
+		g.ballp[i].X += g.ballv[i].X
+		g.ballp[i].Y += g.ballv[i].Y
+		if g.ballp[i].X >= g.size.X {
+			g.ballp[i].X = (g.size.X * 2.0) - g.ballp[i].X
+			g.ballv[i].X = -g.ballv[i].X
+		}
+		if g.ballp[i].Y >= g.size.Y {
+			g.ballp[i].Y = (g.size.Y * 2.0) - g.ballp[i].Y
+			g.ballv[i].Y = -g.ballv[i].Y
+		}
+		if g.ballp[i].X < 0 {
+			g.ballp[i].X = -g.ballp[i].X
+			g.ballv[i].X = -g.ballv[i].X
+		}
+		if g.ballp[i].Y < 0 {
+			g.ballp[i].Y = -g.ballp[i].Y
+			g.ballv[i].Y = -g.ballv[i].Y
+		}
 	}
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Gray{16})
+	ebitenutil.DebugPrint(screen, strconv.FormatFloat(ebiten.ActualFPS(), 'f', 3, 64))
 	var drawer graphics.Draw
 	drawer.Img = screen
-	var mid math.Vector
-	mid.X = float32(screen.Bounds().Size().X / 2)
-	mid.Y = float32(screen.Bounds().Size().Y / 2)
-	drawer.MoveTo(mid)
-	drawer.LineTo(g.ballp, color.White)
-	screen.Set(int(g.ballp.X), int(g.ballp.Y), color.White)
+	for i := 1; i < lines; i += 2 {
+		drawer.MoveTo(g.ballp[i-1])
+		drawer.LineTo(g.ballp[i], color.White)
+	}
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
@@ -59,14 +66,18 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 }
 
 func main() {
+	var rand std.Rand
+	rand.Seed(time.Now().UnixNano())
 	ebiten.SetWindowSize(800, 600)
 	ebiten.SetWindowTitle("Hello, World!")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 	var game Game = Game{}
-	game.ballp.X = 1
-	game.ballp.Y = 1
-	game.ballv.X = 1.25
-	game.ballv.Y = .75
+	for i := 0; i < lines; i++ {
+		game.ballp[i].X = rand.Float32() * 799.0
+		game.ballp[i].Y = rand.Float32() * 599.0
+		game.ballv[i].X = rand.Float32() * 2.0
+		game.ballv[i].Y = rand.Float32() * 2.0
+	}
 	game.size.X = 800
 	game.size.Y = 600
 	if err := ebiten.RunGame(&game); err != nil {
