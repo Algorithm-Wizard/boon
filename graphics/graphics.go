@@ -10,7 +10,7 @@ import (
 type Draw struct {
 	Pos  math.Vector
 	Size math.Vector
-	Img  ebiten.Image
+	Img  *ebiten.Image
 }
 
 func (d *Draw) MoveTo(pos math.Vector) {
