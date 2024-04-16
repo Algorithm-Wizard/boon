@@ -15,39 +15,39 @@ type Game struct {
 }
 
 /*type vector struct {
-	x float32
-	y float32
+	X float32
+	Y float32
 }*/
 
 func (g *Game) Update() error {
-	g.ballp.x += g.ballv.x
-	g.ballp.y += g.ballv.y
-	if g.ballp.x >= g.size.x {
-		g.ballp.x = (g.size.x * 2.0) - g.ballp.x
-		g.ballv.x = -g.ballv.x
+	g.ballp.X += g.ballv.X
+	g.ballp.Y += g.ballv.Y
+	if g.ballp.X >= g.size.X {
+		g.ballp.X = (g.size.X * 2.0) - g.ballp.X
+		g.ballv.X = -g.ballv.X
 	}
-	if g.ballp.y >= g.size.y {
-		g.ballp.y = (g.size.y * 2.0) - g.ballp.y
-		g.ballv.y = -g.ballv.y
+	if g.ballp.Y >= g.size.Y {
+		g.ballp.Y = (g.size.Y * 2.0) - g.ballp.Y
+		g.ballv.Y = -g.ballv.Y
 	}
-	if g.ballp.x < 0 {
-		g.ballp.x = -g.ballp.x
-		g.ballv.x = -g.ballv.x
+	if g.ballp.X < 0 {
+		g.ballp.X = -g.ballp.X
+		g.ballv.X = -g.ballv.X
 	}
-	if g.ballp.y < 0 {
-		g.ballp.y = -g.ballp.y
-		g.ballv.y = -g.ballv.y
+	if g.ballp.Y < 0 {
+		g.ballp.Y = -g.ballp.Y
+		g.ballv.Y = -g.ballv.Y
 	}
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Gray{16})
-	screen.Set(int(g.ballp.x), int(g.ballp.y), color.White)
+	screen.Set(int(g.ballp.X), int(g.ballp.Y), color.White)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return int(g.size.x), int(g.size.y)
+	return int(g.size.X), int(g.size.Y)
 }
 
 func main() {
@@ -55,12 +55,12 @@ func main() {
 	ebiten.SetWindowTitle("Hello, World!")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 	var game Game = Game{}
-	game.ballp.x = 1
-	game.ballp.y = 1
-	game.ballv.x = 1.25 / 4.0
-	game.ballv.y = .75 / 4.0
-	game.size.x = 160
-	game.size.y = 120
+	game.ballp.X = 1
+	game.ballp.Y = 1
+	game.ballv.X = 1.25
+	game.ballv.Y = .75
+	game.size.X = 800
+	game.size.Y = 600
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
 	}
