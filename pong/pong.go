@@ -3,9 +3,8 @@ package main
 import (
 	"image/color"
 	"log"
-	std "math/rand"
+	rand "math/rand"
 	"strconv"
-	"time"
 
 	"github.com/Algorithm-Wizard/boon/graphics"
 	"github.com/Algorithm-Wizard/boon/math"
@@ -66,8 +65,6 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 }
 
 func main() {
-	var rand std.Rand
-	rand.Seed(time.Now().UnixNano())
 	ebiten.SetWindowSize(800, 600)
 	ebiten.SetWindowTitle("Hello, World!")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
