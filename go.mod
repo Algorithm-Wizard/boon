@@ -1,4 +1,4 @@
-module boon
+module github.com/Algorithm-Wizard/boon
 
 go 1.22.2
 

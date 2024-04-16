@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"Algorithm-Wizard/math/vector"
 )
 
 type Game struct {
