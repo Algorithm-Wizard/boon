@@ -4,13 +4,14 @@ import (
 	"image/color"
 	"log"
 
+	"github.com/Algorithm-Wizard/boon/math"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Game struct {
-	ballp vector
-	ballv vector
-	size  vector
+	ballp math.Vector
+	ballv math.Vector
+	size  math.Vector
 }
 
 /*type vector struct {
