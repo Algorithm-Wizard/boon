@@ -45,7 +45,7 @@ func (g *Game) Update() error {
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Gray{16})
 	var drawer graphics.Draw
-	drawer.Img = *screen
+	drawer.Img = screen
 	var mid math.Vector
 	mid.X = float32(screen.Bounds().Size().X / 2)
 	mid.Y = float32(screen.Bounds().Size().Y / 2)
