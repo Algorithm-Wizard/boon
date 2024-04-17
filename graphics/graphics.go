@@ -47,5 +47,5 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 			xi += xstp
 		}
 	}
-	d.Img.Set(int(end.X), int(end.Y), clr)
+	d.Img.Set(end.X>>16, end.Y>>16, clr)
 }

@@ -15,8 +15,8 @@ import (
 const lines int = 1000
 
 type Game struct {
-	ballp [lines]math.Vector
-	ballv [lines]math.Vector
+	ballp [lines * 2]math.Vector
+	ballv [lines * 2]math.Vector
 	size  math.Vector
 }
 
