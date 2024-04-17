@@ -51,7 +51,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	drawer.Img = screen
 	for i := 1; i < lines*2; i += 2 {
 		drawer.MoveTo(g.ballp[i-1])
-		drawer.LineTo(g.ballp[i], color.White)
+		//drawer.LineTo(g.ballp[i], color.White)
 	}
 }
 

@@ -43,7 +43,7 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 		xstp := dx / dy
 		xi := bgn.X
 		for yi := bgn.Y; yi < end.Y; yi += 1.0 {
-			d.Img.Set(int(xi), int(yi), clr)
+			d.Img.Set(xi>>16, yi>>16, clr)
 			xi += xstp
 		}
 	}
