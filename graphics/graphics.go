@@ -8,31 +8,35 @@ import (
 )
 
 type Draw struct {
-	Pos  math.Vector
-	Size math.Vector
+	Pos  math.Vectori
+	Size math.Vectori
 	Img  *ebiten.Image
 }
 
 func (d *Draw) MoveTo(pos math.Vector) {
-	d.Pos = pos
+	d.Pos.X = int(pos.X * 65536.0)
+	d.Pos.Y = int(pos.Y * 65536.0)
 }
 
 func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 	bgn := d.Pos
-	end := dst
+	end := math.Vectori{
+		X: int(dst.X * 65536.0),
+		Y: int(dst.Y * 65536.0),
+	}
 	dx := end.X - d.Pos.X
 	dy := end.Y - d.Pos.Y
-	if math.Abs(dx) > math.Abs(dy) {
+	if math.Absi(dx) > math.Absi(dy) {
 		if bgn.X > end.X {
 			bgn, end = end, bgn
 		}
 		ystp := dy / dx
 		yi := bgn.Y
 		for xi := bgn.X; xi < end.X; xi += 1.0 {
-			d.Img.Set(int(xi), int(yi), clr)
+			d.Img.Set(xi>>16, yi>>16, clr)
 			yi += ystp
 		}
-	} else if math.Abs(dy) > math.Abs(dx) {
+	} else if math.Absi(dy) > math.Absi(dx) {
 		if bgn.Y > end.Y {
 			bgn, end = end, bgn
 		}
@@ -43,6 +47,5 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 			xi += xstp
 		}
 	}
-	d.Img.Set(int(d.Pos.X), int(d.Pos.Y), clr)
 	d.Img.Set(int(end.X), int(end.Y), clr)
 }

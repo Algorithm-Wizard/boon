@@ -12,7 +12,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-const lines int = 200
+const lines int = 1000
 
 type Game struct {
 	ballp [lines]math.Vector
@@ -20,21 +20,16 @@ type Game struct {
 	size  math.Vector
 }
 
-/*type vector struct {
-	X float32
-	Y float32
-}*/
-
 func (g *Game) Update() error {
-	for i := 0; i < lines; i++ {
+	for i := 0; i < lines*2; i++ {
 		g.ballp[i].X += g.ballv[i].X
 		g.ballp[i].Y += g.ballv[i].Y
 		if g.ballp[i].X >= g.size.X {
-			g.ballp[i].X = (g.size.X * 2.0) - g.ballp[i].X
+			g.ballp[i].X = (g.size.X * 2) - g.ballp[i].X
 			g.ballv[i].X = -g.ballv[i].X
 		}
 		if g.ballp[i].Y >= g.size.Y {
-			g.ballp[i].Y = (g.size.Y * 2.0) - g.ballp[i].Y
+			g.ballp[i].Y = (g.size.Y * 2) - g.ballp[i].Y
 			g.ballv[i].Y = -g.ballv[i].Y
 		}
 		if g.ballp[i].X < 0 {
@@ -54,7 +49,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrint(screen, strconv.FormatFloat(ebiten.ActualFPS(), 'f', 3, 64))
 	var drawer graphics.Draw
 	drawer.Img = screen
-	for i := 1; i < lines; i += 2 {
+	for i := 1; i < lines*2; i += 2 {
 		drawer.MoveTo(g.ballp[i-1])
 		drawer.LineTo(g.ballp[i], color.White)
 	}
@@ -72,8 +67,8 @@ func main() {
 	for i := 0; i < lines; i++ {
 		game.ballp[i].X = rand.Float32() * 799.0
 		game.ballp[i].Y = rand.Float32() * 599.0
-		game.ballv[i].X = rand.Float32() * 2.0
-		game.ballv[i].Y = rand.Float32() * 2.0
+		game.ballv[i].X = rand.Float32() * 2.5
+		game.ballv[i].Y = rand.Float32() * 2.5
 	}
 	game.size.X = 800
 	game.size.Y = 600
