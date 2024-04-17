@@ -32,7 +32,7 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 		}
 		ystp := dy / dx
 		yi := bgn.Y
-		for xi := bgn.X; xi < end.X; xi += 1.0 {
+		for xi := bgn.X; xi < end.X; xi += 65536 {
 			d.Img.Set(xi>>16, yi>>16, clr)
 			yi += ystp
 		}
@@ -42,7 +42,7 @@ func (d *Draw) LineTo(dst math.Vector, clr color.Color) {
 		}
 		xstp := dx / dy
 		xi := bgn.X
-		for yi := bgn.Y; yi < end.Y; yi += 1.0 {
+		for yi := bgn.Y; yi < end.Y; yi += 65536 {
 			d.Img.Set(xi>>16, yi>>16, clr)
 			xi += xstp
 		}
