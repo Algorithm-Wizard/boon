@@ -70,8 +70,8 @@ func main() {
 		game.ballv[i].X = rand.Float32() * 2.5
 		game.ballv[i].Y = rand.Float32() * 2.5
 	}
-	game.size.X = 800
-	game.size.Y = 600
+	game.size.X = 400
+	game.size.Y = 300
 	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
 	}
